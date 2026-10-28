@@ -1,0 +1,107 @@
+/* Сброс базовых отступов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Высота на весь экран */
+}
+
+/* Контейнер чата */
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    height: 90vh;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Элементы идут сверху вниз */
+    overflow: hidden;
+}
+
+/* Шапка */
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.chat-header h1 {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+/* Область сообщений */
+.chat-messages {
+    flex-grow: 1; /* Занимает всё свободное пространство */
+    padding: 20px;
+    overflow-y: auto; /* Позволяет скроллить, если сообщений много */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Расстояние между сообщениями */
+    background-color: #e5ddd5;
+}
+
+/* Пузыри сообщений */
+.message {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    line-height: 1.4;
+}
+
+/* Входящие сообщения (слева) */
+.message.incoming {
+    background-color: #ffffff;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+/* Исходящие сообщения (справа) */
+.message.outgoing {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+/* Поле ввода */
+.chat-input-area {
+    display: flex;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ccc;
+    gap: 10px;
+}
+
+.chat-input-area input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.chat-input-area button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.chat-input-area button:hover {
+    background-color: #0056b3;
+}

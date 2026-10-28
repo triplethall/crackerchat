@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Cracker chat</title>
+</head>
+<body>
+
+    <div class="chat-container">
+        <!-- Шапка чата -->
+        <header class="chat-header">
+            <h1>Общий чат</h1>
+        </header>
+
+        <!-- Область с сообщениями -->
+        <main class="chat-messages" id="chat-messages">
+            <!-- Примеры сообщений для проверки верстки -->
+            <div class="message incoming">
+                <p>Привет! Как дела?</p>
+            </div>
+            <div class="message outgoing">
+                <p>Привет! Отлично, верстаю чат.</p>
+            </div>
+        </main>
+
+        <!-- Поле ввода и кнопка -->
+        <footer class="chat-input-area">
+            <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off">
+            <button id="send-btn">Отправить</button>
+        </footer>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
