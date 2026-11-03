@@ -1,38 +1,83 @@
-/* Сброс базовых отступов */
+/* --- ПЕРЕМЕННЫЕ ЦВЕТОВ --- */
+:root {
+    /* Светлая тема (по умолчанию) */
+    --bg-page: #f0f2f5;
+    --bg-chat: #ffffff;
+    --bg-header: #007bff;
+    --text-header: #ffffff;
+    --bg-messages: #e5ddd5;
+    
+    --bg-msg-in: #ffffff;
+    --text-msg-in: #000000;
+    --bg-msg-out: #dcf8c6;
+    --text-msg-out: #000000;
+    
+    --bg-input-area: #f0f0f0;
+    --bg-input: #ffffff;
+    --text-input: #000000;
+    --border-input: #ccc;
+    --bg-btn: #007bff;
+    --bg-btn-hover: #0056b3;
+}
+
+/* Тёмная тема */
+body.dark-theme {
+    --bg-page: #121212;
+    --bg-chat: #1e1e1e;
+    --bg-header: #2d2d2d;
+    --text-header: #ffffff;
+    --bg-messages: #121212;
+    
+    --bg-msg-in: #2d2d2d;
+    --text-msg-in: #ffffff;
+    --bg-msg-out: #005c4b;
+    --text-msg-out: #ffffff;
+    
+    --bg-input-area: #1e1e1e;
+    --bg-input: #2d2d2d;
+    --text-input: #ffffff;
+    --border-input: #444;
+    --bg-btn: #007bff;
+    --bg-btn-hover: #0056b3;
+}
+
+/* --- ОБЩИЕ СТИЛИ --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавная смена темы */
 }
 
 body {
-    background-color: #f0f2f5;
+    background-color: var(--bg-page);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Высота на весь экран */
+    height: 100vh;
 }
 
-/* Контейнер чата */
 .chat-container {
     width: 100%;
     max-width: 600px;
     height: 90vh;
-    background-color: #ffffff;
+    background-color: var(--bg-chat);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Элементы идут сверху вниз */
+    flex-direction: column;
     overflow: hidden;
 }
 
 /* Шапка */
 .chat-header {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--bg-header);
+    color: var(--text-header);
     padding: 15px 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between; /* Раздвигаем заголовок и кнопку */
+    align-items: center;
 }
 
 .chat-header h1 {
@@ -40,18 +85,45 @@ body {
     font-weight: normal;
 }
 
-/* Область сообщений */
-.chat-messages {
-    flex-grow: 1; /* Занимает всё свободное пространство */
-    padding: 20px;
-    overflow-y: auto; /* Позволяет скроллить, если сообщений много */
+/* Стили для самой кнопки */
+.theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
     display: flex;
-    flex-direction: column;
-    gap: 10px; /* Расстояние между сообщениями */
-    background-color: #e5ddd5;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 50%;
+    transition: background-color 0.2s;
 }
 
-/* Пузыри сообщений */
+.theme-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Стили для картинки внутри кнопки */
+.theme-btn img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1); 
+    display: block; 
+}
+
+
+/* Зона сообщений */
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--bg-messages);
+}
+
 .message {
     max-width: 75%;
     padding: 10px 15px;
@@ -59,33 +131,35 @@ body {
     line-height: 1.4;
 }
 
-/* Входящие сообщения (слева) */
 .message.incoming {
-    background-color: #ffffff;
+    background-color: var(--bg-msg-in);
+    color: var(--text-msg-in);
     align-self: flex-start;
     border-bottom-left-radius: 0;
 }
 
-/* Исходящие сообщения (справа) */
 .message.outgoing {
-    background-color: #dcf8c6;
+    background-color: var(--bg-msg-out);
+    color: var(--text-msg-out);
     align-self: flex-end;
     border-bottom-right-radius: 0;
 }
 
-/* Поле ввода */
+/* Поле ввода*/
 .chat-input-area {
     display: flex;
     padding: 15px;
-    background-color: #f0f0f0;
-    border-top: 1px solid #ccc;
+    background-color: var(--bg-input-area);
+    border-top: 1px solid var(--border-input);
     gap: 10px;
 }
 
 .chat-input-area input {
     flex-grow: 1;
     padding: 10px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-input);
+    background-color: var(--bg-input);
+    color: var(--text-input);
     border-radius: 20px;
     outline: none;
     font-size: 1rem;
@@ -93,7 +167,7 @@ body {
 
 .chat-input-area button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: var(--bg-btn);
     color: white;
     border: none;
     border-radius: 20px;
@@ -103,5 +177,5 @@ body {
 }
 
 .chat-input-area button:hover {
-    background-color: #0056b3;
+    background-color: var(--bg-btn-hover);
 }

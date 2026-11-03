@@ -9,14 +9,15 @@
 <body>
 
     <div class="chat-container">
-        <!-- Шапка чата -->
         <header class="chat-header">
             <h1>Общий чат</h1>
+            <button id="theme-toggle" class="theme-btn" aria-label="Сменить тему">
+                <img src="assets/sun.svg" id="theme-icon" alt="theme_icon">
+            </button>
         </header>
 
         <!-- Область с сообщениями -->
         <main class="chat-messages" id="chat-messages">
-            <!-- Примеры сообщений для проверки верстки -->
             <div class="message incoming">
                 <p>Привет! Как дела?</p>
             </div>
@@ -25,7 +26,6 @@
             </div>
         </main>
 
-        <!-- Поле ввода и кнопка -->
         <footer class="chat-input-area">
             <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off">
             <button id="send-btn">Отправить</button>
