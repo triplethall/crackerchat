@@ -129,6 +129,7 @@ body {
     padding: 10px 15px;
     border-radius: 10px;
     line-height: 1.4;
+    overflow-wrap: break-word;
 }
 
 .message.incoming {
