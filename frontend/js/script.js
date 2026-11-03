@@ -30,7 +30,33 @@ sendBtn.addEventListener('click', sendMessage);
 
 // Вешаем обработчик на нажатие клавиши Enter 
 messageInput.addEventListener('keypress', function (e) {
+    console.log("сообщение")
     if (e.key === 'Enter') {
         sendMessage();
+    }
+});
+
+// смена темы
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeIcon.src = 'assets/moon.svg'; // Если тема темная, показываем луну
+}
+
+// Обработчик клика по кнопке
+themeToggleBtn.addEventListener('click', () => {
+    // Переключаем класс dark-theme на теге body
+    console.log("Кнопка нажата");
+    document.body.classList.toggle('dark-theme');
+    
+    
+    if (document.body.classList.contains('dark-theme')) {
+        themeIcon.src = 'assets/moon.svg'; 
+        localStorage.setItem('theme', 'dark'); 
+    } else {
+        themeIcon.src = 'assets/sun.svg'; 
+        localStorage.setItem('theme', 'light'); 
     }
 });
