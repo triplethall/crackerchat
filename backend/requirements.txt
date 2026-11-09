@@ -28,3 +28,4 @@ TBB @ file:///build/onetbb/src/build/python/python_build
 urllib3==2.7.0
 VapourSynth==77
 wheel==0.48.0
+django-cors-headers=4.9.0
