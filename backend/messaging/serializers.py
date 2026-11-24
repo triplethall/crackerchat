@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Message, Post
+from .models import Message
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,13 +17,3 @@ class MessageSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Поле 'text' не может быть пустым.")
         return value
 
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['id', 'text', 'created_at']
-        read_only_fields = ['id', 'created_at']
-    def validate_text(self, value):
-        value = value.strip()
-        if not value:
-            raise serializers.ValidationError("Пост не может быть пустым.")
-        return value
