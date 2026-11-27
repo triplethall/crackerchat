@@ -17,4 +17,3 @@ class MessageSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Поле 'text' не может быть пустым.")
         return value
 
-

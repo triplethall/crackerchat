@@ -10,4 +10,3 @@ class MessageAdmin(admin.ModelAdmin):
     @admin.display(description="Текст")
     def short_text(self, obj):
         return obj.text[:80]
-

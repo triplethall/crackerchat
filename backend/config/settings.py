@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'messaging',
     'rest_framework',
+    'crackerchat',
 ]
 
 MIDDLEWARE = [
