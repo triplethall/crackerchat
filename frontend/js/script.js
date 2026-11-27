@@ -1,62 +1,104 @@
+import { getMessages, sendMessage } from './api.js';
+
 const messageInput = document.getElementById('message-input');
 const sendBtn = document.getElementById('send-btn');
 const chatMessages = document.getElementById('chat-messages');
 
-// Функция отправки сообщения
-function sendMessage() {
-    const text = messageInput.value.trim();
-    
-    // Если поле пустое, ничего не делаем
-    if (text === '') return;
+const shownIds = new Set(); // чтобы не рисовать одно и то же дважды
 
-    // Создаем новый элемент сообщения
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', 'outgoing'); // Добавляем классы
-    
-    const p = document.createElement('p');
-    p.textContent = text;
-    
-    messageDiv.appendChild(p);
-    chatMessages.appendChild(messageDiv);
+function formatTime(isoDate) {
+    return new Date(isoDate).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+}
 
-    messageInput.value = '';
-
-    // Автоскролл вниз к последнему сообщению
+function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Вешаем обработчик события на кнопку
-sendBtn.addEventListener('click', sendMessage);
+// Рисует одно сообщение
+function renderMessage(message, mine = false) {
+    if (shownIds.has(message.id)) return;
+    shownIds.add(message.id);
 
-// Вешаем обработчик на нажатие клавиши Enter 
-messageInput.addEventListener('keypress', function (e) {
-    console.log("сообщение")
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', mine ? 'outgoing' : 'incoming');
+
+    const p = document.createElement('p');
+    p.textContent = message.text; // ВАЖНО: textContent защищает от XSS
+
+    const time = document.createElement('span');
+    time.classList = 'message-time';
+    time.textContent = formatTime(message.date);
+
+    messageDiv.append(p, time);
+    chatMessages.appendChild(messageDiv);
+}
+
+// Загружает ленту
+async function loadMessages() {
+    const data = await getMessages();
+    // Сервер отдаёт новые сверху, а нам нужно снизу, поэтому переворачиваем
+    const messages = data.results.slice().reverse();
+    for (const message of messages) {
+        renderMessage(message);
+    }
+    scrollToBottom();
+}
+
+// Сервер требует поле object (тема). Берем первую строку текста.
+function makeObject(text) {
+    return text.split('\n')[0].slice(0, 255);
+}
+
+async function handleSend() {
+    const text = messageInput.value.trim();
+    if (text === '') return;
+
+    messageInput.value = '';
+    sendBtn.disabled = true; // блокируем кнопку, пока летит запрос
+
+    try {
+        const message = await sendMessage({ object: makeObject(text), text });
+        renderMessage(message, true); // true = мое сообщение (справа)
+        scrollToBottom();
+    } catch (error) {
+        console.error(error);
+        messageInput.value = text; // возвращаем текст при ошибке
+        alert(`Не получилось отправить.\n${error.message}`);
+    } finally {
+        sendBtn.disabled = false;
+    }
+}
+
+// Обработчики
+sendBtn.addEventListener('click', handleSend);
+messageInput.addEventListener('keydown', (e) => { // keydown вместо keypress
     if (e.key === 'Enter') {
-        sendMessage();
+        handleSend();
     }
 });
 
-// смена темы
+// Первая загрузка
+loadMessages().catch((error) => {
+    console.error(error);
+    alert(`Не получилось загрузить сообщения.\n${error.message}`);
+});
+
+// --- Смена темы ----
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 const currentTheme = localStorage.getItem('theme');
 if (currentTheme === 'dark') {
     document.body.classList.add('dark-theme');
-    themeIcon.src = 'assets/moon.svg'; // Если тема темная, показываем луну
+    themeIcon.src = 'assets/moon.svg';
 }
 
-// Обработчик клика по кнопке
 themeToggleBtn.addEventListener('click', () => {
-    // Переключаем класс dark-theme на теге body
-    console.log("Кнопка нажата");
     document.body.classList.toggle('dark-theme');
-    
-    
     if (document.body.classList.contains('dark-theme')) {
-        themeIcon.src = 'assets/moon.svg'; 
-        localStorage.setItem('theme', 'dark'); 
+        themeIcon.src = 'assets/moon.svg';
+        localStorage.setItem('theme', 'dark');
     } else {
-        themeIcon.src = 'assets/sun.svg'; 
-        localStorage.setItem('theme', 'light'); 
+        themeIcon.src = 'assets/sun.svg';
+        localStorage.setItem('theme', 'light');
     }
 });
