@@ -1,5 +1,4 @@
-airdrop-ng==1.1
-airgraph-ng==1.1
+﻿airgraph-ng==1.1
 asgiref==3.12.1
 attrs==26.1.0
 boolean.py==5.0
@@ -24,9 +23,10 @@ pytz==2026.1
 sentry-sdk==2.68.0
 smbus==1.1
 sqlparse==0.5.3
-TBB @ file:///build/onetbb/src/build/python/python_build
 urllib3==2.7.0
 VapourSynth==77
 wheel==0.48.0
 django-cors-headers==4.9.0
 djangorestframework==3.18.3
+channels==4.3.2
+daphne==4.2.3
