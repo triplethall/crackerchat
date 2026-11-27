@@ -1,7 +1,9 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from rest_framework import mixins, status, viewsets
 from rest_framework.response import Response
-
 from .serializers import MessageSerializer
+from .consumers import GROUP_NAME
 from .services import create_message, get_messages
 
 class MessageViewSet(
@@ -46,5 +48,9 @@ class MessageViewSet(
         )
 
         out = self.get_serializer(message)
+        # Разошлём новое сообщение всем, кто сейчас подключён по вебсокету.
+        async_to_sync(get_channel_layer().group_send)(
+            GROUP_NAME, {'type': 'chat.message', 'data': out.data}
+        )
         return Response(out.data, status=status.HTTP_201_CREATED)
 
