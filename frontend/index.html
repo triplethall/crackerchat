@@ -16,18 +16,11 @@
             </button>
         </header>
 
-        <!-- Область с сообщениями -->
-        <main class="chat-messages" id="chat-messages">
-            <div class="message incoming">
-                <p>Привет! Как дела?</p>
-            </div>
-            <div class="message outgoing">
-                <p>Привет! Отлично, верстаю чат.</p>
-            </div>
-        </main>
+        <!-- Область с сообщениями: их добавляет сюда script.js -->
+        <main class="chat-messages" id="chat-messages"></main>
 
         <footer class="chat-input-area">
-            <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off">
+            <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off" maxlength="2000">
             <button id="send-btn">Отправить</button>
         </footer>
     </div>
